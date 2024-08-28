@@ -1,0 +1,81 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Бумага",
+      "description": "Бумага для печати/ письма различных форматов"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Скобы",
+      "description": "Скобы для степлеров от разных фирм"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Картриджи",
+      "description": "Картриджи разных цветов, от разных фирм"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Скрепки",
+      "description": "Скрепки канцелярские, от разных фирм, разного размера"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "name": "Принтеры",
+      "description": "Принтеры от разных фирм"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Бумага А4",
+      "description": "Листов: 500шт.\r\nЦвет: Белый",
+      "image": "",
+      "category": 1,
+      "price": 289,
+      "created_at": "2024-08-28",
+      "updated_at": "2024-08-28"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Скрепки BRAUBERG",
+      "description": "Скрепки канцелярские от компании BRAUBERG\r\nРазмер: 50мм.\r\nКоличество: 50шт.",
+      "image": "",
+      "category": 4,
+      "price": 295,
+      "created_at": "2024-08-28",
+      "updated_at": "2024-08-28"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Картридж SP 3020/3025",
+      "description": "Для Xerox\r\nЦвет: черный",
+      "image": "",
+      "category": 3,
+      "price": 633,
+      "created_at": "2024-08-28",
+      "updated_at": "2024-08-28"
+    }
+  }
+]
