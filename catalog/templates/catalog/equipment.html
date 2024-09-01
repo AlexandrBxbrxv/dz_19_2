@@ -2,9 +2,58 @@
 
 {% block content %}
 
-{% include 'catalog/includes/inc_catalog_filter.html' %}
-
 {% load catalog_tags %}
+
+<div class="container mt-1">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="container col-8">
+        <div class="card">
+          <div class="container mt-1">
+            <p>Фильтры</p>
+            <div class="row">
+              <div class="container col-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=5 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    Принтеры
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=0 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    категория
+                  </label>
+                </div>
+              </div>
+              <div class="container col-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=0 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    категория
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=0 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    категория
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container col-4">
+        <input type="text" name="search_field" placeholder="Название">
+        <button type="submit">Найти</button>
+      </div>
+    </div>
+  </form>
+</div>
+
 <div class="container mt-3">
   <div class="row">
     {% for item in equipment %}

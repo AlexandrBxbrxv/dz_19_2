@@ -1,17 +1,65 @@
 {% extends 'catalog/base.html' %}
-
 {% block content %}
 
-{% include 'catalog/includes/inc_catalog_filter.html' %}
-
 {% load catalog_tags %}
+
+<div class="container mt-1">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="container col-8">
+        <div class="card">
+          <div class="container mt-1">
+            <p>Фильтры</p>
+            <div class="row">
+              <div class="container col-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=1 name="consumables_check" checked="checked">
+                  <label class="form-check-label">
+                    Бумага
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=3 name="consumables_check" checked="checked">
+                  <label class="form-check-label">
+                    Картриджи
+                  </label>
+                </div>
+              </div>
+              <div class="container col-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=4 name="consumables_check" checked="checked">
+                  <label class="form-check-label">
+                    Скрепки
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=2 name="consumables_check" checked="checked">
+                  <label class="form-check-label">
+                    Скобы
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container col-4">
+        <input type="text" name="search_field" placeholder="Название">
+        <button type="submit">Найти</button>
+      </div>
+    </div>
+  </form>
+</div>
+
 <div class="container mt-3">
   <div class="row">
     {% for item in consumables %}
     <div class="col-3">
       <div class="card shadow-sm" style="width: 20rem;">
         <div class="container center">
-        <img src="{{ item.image | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
+          <img src="{{ item.image | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
         </div>
         <div class="card-body">
           <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
