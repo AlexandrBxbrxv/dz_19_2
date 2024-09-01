@@ -1,0 +1,30 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+{% include 'catalog/includes/inc_catalog_filter.html' %}
+
+{% load catalog_tags %}
+<div class="container mt-3">
+  <div class="row">
+    {% for item in consumables %}
+    <div class="col-3">
+      <div class="card shadow-sm" style="width: 20rem;">
+        <div class="container center">
+        <img src="{{ item.image | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
+          <p class="card-text">Цена: {{ item.price }}<br>На складе: None <br>Описание: {{ item.description|slice:":100" }}</p>
+          <div class="row">
+            <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:product_detail' item.pk %}">Подробнее</a>
+            <a class="btn btn-warning col-5 m-1" href="#">В корзину</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
