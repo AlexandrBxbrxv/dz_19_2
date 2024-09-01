@@ -12,3 +12,7 @@ def contacts(request):
         user_message = request.POST.get('user_message')
         print(user_name, user_email, user_message)
     return render(request, 'catalog/contacts.html')
+
+
+def store(request):
+    return render(request, 'catalog/store.html')
