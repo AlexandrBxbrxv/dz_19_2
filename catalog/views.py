@@ -74,4 +74,4 @@ def add_product(request):
         description = request.POST.get('description')
         image = request.POST.get('image')
 
-    return render(request, 'catalog/contacts.html', context)
+    return render(request, 'catalog/add_product.html', context)
