@@ -17,18 +17,28 @@ def contacts(request):
 
 
 def consumables(request):
-    consumables_list = Product.objects.exclude(category=5)  # Исключая категорию принтеры
+    consumable_list = Product.objects.exclude(category=5)  # Исключая категорию принтеры
     context = {
-        'consumables': consumables_list,
-        'page_name': 1
+        'consumables': consumable_list,
+        'page_name': ''
     }
     return render(request, 'catalog/consumables.html', context)
 
 
 def equipment(request):
-    consumables_list = Product.objects.filter(category=5)  # только категория принтеры
+    equipment_list = Product.objects.filter(category=5)  # только категория принтеры
     context = {
-        'consumables': consumables_list,
-        'page_name': 1
+        'equipment': equipment_list,
+        'page_name': ''
     }
     return render(request, 'catalog/equipment.html', context)
+
+
+def product_detail(request, pk):
+    product = Product.objects.get(pk=pk)
+    context = {
+        'product': product,
+        'page_name': 'Страница товара'
+    }
+    return render(request, 'catalog/product_detail.html', context)
+
