@@ -23,7 +23,7 @@ def contacts(request):
 
 
 def consumables(request):
-    consumable_list = Product.objects.exclude(category=5)  # Исключая категорию принтеры
+    consumable_list = Product.objects.exclude(category__in=[5, 31])  # Исключая категорию принтеры
     if request.method == "POST":
         check_box_list = request.POST.getlist('consumables_check')
         search_field = request.POST.get('search_field')
@@ -39,7 +39,7 @@ def consumables(request):
 
 
 def equipment(request):
-    equipment_list = Product.objects.filter(category=5)  # Только категория принтеры
+    equipment_list = Product.objects.filter(category__in=[5, 31])  # Только категория принтеры
     if request.method == "POST":
         check_box_list = request.POST.getlist('equipment_check')
         search_field = request.POST.get('search_field')
@@ -62,3 +62,16 @@ def product_detail(request, pk):
     }
     return render(request, 'catalog/product_detail.html', context)
 
+
+def add_product(request):
+    context = {
+        'page_name': 'Добавление продукта'
+    }
+    if request.method == "POST":
+        name = request.POST.get('name')
+        price = request.POST.get('price')
+        category = request.POST.get('category')
+        description = request.POST.get('description')
+        image = request.POST.get('image')
+
+    return render(request, 'catalog/contacts.html', context)
