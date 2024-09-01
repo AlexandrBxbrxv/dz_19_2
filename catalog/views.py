@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from catalog.models import Product
+
 
 def home(request):
     return render(request, 'catalog/home.html')
@@ -15,4 +17,6 @@ def contacts(request):
 
 
 def store(request):
-    return render(request, 'catalog/store.html')
+    consumables = Product.objects.exclude(category=5)  # Исключая категорию принтеры
+    context = {'consumables': consumables}
+    return render(request, 'catalog/store.html', context)
