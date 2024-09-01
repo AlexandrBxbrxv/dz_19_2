@@ -1,47 +1,8 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<div class="container mt-1">
-  <div class="row">
-    <div class="container mt-1">
-      <div class="col-6">
-        <div class="card">
-          <div class="container mt-1">
-            <p>Фильтры</p>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" name="paper_check">
-              <label class="form-check-label">
-                Бумага
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" name="paper_clips_check">
-              <label class="form-check-label">
-                Скрепки
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" name="staples_check">
-              <label class="form-check-label">
-                Скобы
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="container mt-1">
-      <div class="col-7">
-        <form>
-          {% csrf_token %}
-          <input type="text" placeholder="Поиск">
-          <input type="submit">
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+{% include 'catalog/includes/inc_catalog_filter.html' %}
 
 <div class="container mt-3">
   <div class="row">
