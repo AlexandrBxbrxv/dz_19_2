@@ -45,20 +45,20 @@
 
 <div class="container mt-3">
   <div class="row">
-
-    <div class="col">
-      <div class="card shadow-sm" style="width: 18rem;">
+    {% for item in consumables_list %}
+    <div class="col-3">
+      <div class="card shadow-sm" style="width: 20rem;">
         <div class="container center">
-        <img src="/static/catalog/img/a4.jfif" class="card-img-top" alt="...">
+        <img src="{{ item.image }}" class="card-img-top" alt="...">
         </div>
         <div class="card-body">
-          <h5 class="card-title">НАЗВАНИЕ</h5>
-          <p class="card-text">Цена:<br>На складе:<br>Описание:</p>
-          <a><button class="btn btn-primary" type="submit">В корзину</button></a>
+          <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
+          <p class="card-text">Цена: {{ item.price }}<br>На складе: None <br>Описание: {{ item.description|slice:":100" }}</p>
+          <a><button class="btn btn-primary" type="submit">На страницу товара</button></a>
         </div>
       </div>
     </div>
-
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

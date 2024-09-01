@@ -16,7 +16,10 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-def store(request):
-    consumables = Product.objects.exclude(category=5)  # Исключая категорию принтеры
-    context = {'consumables': consumables}
-    return render(request, 'catalog/store.html', context)
+def consumables(request):
+    consumables_list = Product.objects.exclude(category=5)  # Исключая категорию принтеры
+    context = {
+        'consumables': consumables_list,
+        'page_name': 1
+    }
+    return render(request, 'catalog/consumables.html', context)
