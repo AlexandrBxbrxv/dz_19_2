@@ -6,7 +6,7 @@ from catalog.models import Category, Product
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        with open('fixtures/catalog_data.json', 'r', encoding='utf-8') as file:
+        with open('fixtures/catalog_data_2.json', 'r', encoding='utf-8') as file:
             dict_list = json.loads(file.read())
             # Сначала должны создаваться модели класса Категория, без них не смогут создаться модели класса Продукт
             categories = []
