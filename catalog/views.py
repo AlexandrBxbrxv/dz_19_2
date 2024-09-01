@@ -23,3 +23,12 @@ def consumables(request):
         'page_name': 1
     }
     return render(request, 'catalog/consumables.html', context)
+
+
+def equipment(request):
+    consumables_list = Product.objects.filter(category=5)  # только категория принтеры
+    context = {
+        'consumables': consumables_list,
+        'page_name': 1
+    }
+    return render(request, 'catalog/equipment.html', context)
