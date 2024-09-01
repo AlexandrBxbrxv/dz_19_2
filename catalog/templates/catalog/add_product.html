@@ -1,0 +1,206 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+<form enctype="multipart/form-data" method="post" id="product_form" novalidate><input type="hidden"
+                                                                                      name="csrfmiddlewaretoken"
+                                                                                      value="JyaevXPhMrJ04RBNx9d60rO0K0etHKYKAtmR2ocwHYDls6YHs1DA1auRTv7afcXC">
+  <div>
+
+
+    <fieldset class="module aligned ">
+
+
+      <div class="form-row field-name">
+
+
+        <div>
+
+          <div class="flex-container">
+
+            <label class="required" for="id_name">Наименование:</label>
+
+            <input type="text" name="name" class="vTextField" maxlength="150" required id="id_name">
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="form-row field-description">
+
+
+        <div>
+
+          <div class="flex-container">
+
+            <label for="id_description">Описание:</label>
+
+            <textarea name="description" cols="40" rows="10" class="vLargeTextField" id="id_description">
+</textarea>
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="form-row field-image">
+
+
+        <div>
+
+          <div class="flex-container">
+
+            <label for="id_image">Изображение:</label>
+
+            <input type="file" name="image" accept="image/*" id="id_image">
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="form-row field-category">
+
+
+        <div>
+
+          <div class="flex-container">
+
+            <label for="id_category">Категория:</label>
+
+            <div class="related-widget-wrapper" data-model-ref="category">
+              <select name="category" data-context="available-source" id="id_category">
+                <option value="" selected>---------</option>
+
+                <option value="1">Бумага</option>
+
+                <option value="2">Скобы</option>
+
+                <option value="3">Картриджи</option>
+
+                <option value="4">Скрепки</option>
+
+                <option value="5">Принтеры</option>
+
+                <option value="31">Калькуляторы</option>
+
+              </select>
+
+              <a class="related-widget-wrapper-link change-related" id="change_id_category"
+                 data-href-template="/admin/catalog/category/__fk__/change/?_to_field=id&amp;_popup=1"
+                 data-popup="yes"
+                 title="Change selected категория"><img src="/static/admin/img/icon-changelink.svg" alt="" width="20"
+                                                        height="20"></a><a
+                class="related-widget-wrapper-link add-related" id="add_id_category"
+                data-popup="yes"
+                href="/admin/catalog/category/add/?_to_field=id&amp;_popup=1"
+                title="Add another категория"><img src="/static/admin/img/icon-addlink.svg" alt="" width="20"
+                                                   height="20"></a><a class="related-widget-wrapper-link delete-related"
+                                                                      id="delete_id_category"
+                                                                      data-href-template="/admin/catalog/category/__fk__/delete/?_to_field=id&amp;_popup=1"
+                                                                      data-popup="yes"
+                                                                      title="Delete selected категория"><img
+                src="/static/admin/img/icon-deletelink.svg" alt="" width="20" height="20"></a><a
+                class="related-widget-wrapper-link view-related" id="view_id_category"
+                data-href-template="/admin/catalog/category/__fk__/change/?_to_field=id"
+                title="View selected категория"><img src="/static/admin/img/icon-viewlink.svg" alt="" width="20"
+                                                     height="20"></a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-row field-price">
+
+        <div>
+
+          <div class="flex-container">
+
+            <label class="required" for="id_price">Цена:</label>
+
+            <input type="number" name="price" class="vIntegerField" required id="id_price">
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-row field-created_at">
+
+        <div>
+
+          <div class="flex-container">
+
+            <label for="id_created_at">Дата создания:</label>
+
+            <p class="date">
+              <input type="text" name="created_at" class="vDateField" size="10" id="id_created_at">
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-row field-updated_at">
+
+        <div>
+
+          <div class="flex-container">
+
+            <label for="id_updated_at">Дата последнего изменения:</label>
+
+            <p class="date">
+              <input type="text" name="updated_at" class="vDateField" size="10" id="id_updated_at">
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </fieldset>
+
+    <div class="submit-row">
+
+      <input type="submit" value="Save" class="default" name="_save">
+
+      <input type="submit" value="Save and add another" name="_addanother">
+      <input type="submit" value="Save and continue editing" name="_continue">
+
+    </div>
+
+    <script id="django-admin-form-add-constants"
+            src="/static/admin/js/change_form.js"
+
+            data-model-name="product"
+
+            async>
+    </script>
+
+    <script id="django-admin-prepopulated-fields-constants"
+            src="/static/admin/js/prepopulate_init.js"
+            data-prepopulated-fields="[]">
+    </script>
+
+  </div>
+</form>
+{% endblock %}
