@@ -27,7 +27,9 @@ def consumables(request):
     if request.method == "POST":
         check_box_list = request.POST.getlist('consumables_check')
         search_field = request.POST.get('search_field')
-        consumable_list = Product.objects.exclude(category=5).filter(name__icontains=search_field, category__in=check_box_list)
+        consumable_list = (consumable_list.filter(
+            name__icontains=search_field,
+            category__in=check_box_list))
 
     context = {
         'consumables': consumable_list,
@@ -37,7 +39,14 @@ def consumables(request):
 
 
 def equipment(request):
-    equipment_list = Product.objects.filter(category=5)  # только категория принтеры
+    equipment_list = Product.objects.filter(category=5)  # Только категория принтеры
+    if request.method == "POST":
+        check_box_list = request.POST.getlist('equipment_check')
+        search_field = request.POST.get('search_field')
+        equipment_list = (equipment_list.filter(
+            name__icontains=search_field,
+            category__in=check_box_list))
+
     context = {
         'equipment': equipment_list,
         'page_name': 'Техника'
