@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, TemplateView
 
 from catalog.models import Product
 
@@ -8,6 +9,10 @@ def home(request):
         'page_name': 'Главная'
     }
     return render(request, 'catalog/home.html', context)
+
+
+# class ContactsTemplateView(TemplateView):
+#     template_name = 'catalog/contacts.html'
 
 
 def contacts(request):
@@ -22,20 +27,25 @@ def contacts(request):
     return render(request, 'catalog/contacts.html', context)
 
 
-def consumables(request):
-    consumable_list = Product.objects.exclude(category__in=[5, 31])  # Исключая категорию принтеры
-    if request.method == "POST":
-        check_box_list = request.POST.getlist('consumables_check')
-        search_field = request.POST.get('search_field')
-        consumable_list = (consumable_list.filter(
-            name__icontains=search_field,
-            category__in=check_box_list))
+class ConsumablesListView(ListView):
+    model = Product
 
-    context = {
-        'consumables': consumable_list,
-        'page_name': 'Расходники'
-    }
-    return render(request, 'catalog/consumables.html', context)
+
+
+# def consumables(request):
+#     consumable_list = Product.objects.exclude(category__in=[5, 31])  # Исключая категорию принтеры
+#     if request.method == "POST":
+#         check_box_list = request.POST.getlist('consumables_check')
+#         search_field = request.POST.get('search_field')
+#         consumable_list = (consumable_list.filter(
+#             name__icontains=search_field,
+#             category__in=check_box_list))
+#
+#     context = {
+#         'consumables': consumable_list,
+#         'page_name': 'Расходники'
+#     }
+#     return render(request, 'catalog/product_list.html', context)
 
 
 def equipment(request):
