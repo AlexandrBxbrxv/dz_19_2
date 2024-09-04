@@ -4,48 +4,23 @@ from django.views.generic import ListView, TemplateView
 from catalog.models import Product
 
 
-def home(request):
-    context = {
-        'page_name': 'Главная'
-    }
-    return render(request, 'catalog/home.html', context)
+class HomeTemplateView(TemplateView):
+    template_name = 'catalog/home.html'
 
 
 class ContactsTemplateView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-# def contacts(request):
-#     context = {
-#         'page_name': 'Контакты'
-#     }
-#     if request.method == "POST":
-#         user_name = request.POST.get('user_name')
-#         user_email = request.POST.get('user_email')
-#         user_message = request.POST.get('user_message')
-#         print(user_name, user_email, user_message)
-#     return render(request, 'catalog/contacts.html', context)
-
-
 class ConsumablesListView(ListView):
     model = Product
 
-
-
-# def consumables(request):
-#     consumable_list = Product.objects.exclude(category__in=[5, 31])  # Исключая категорию принтеры
 #     if request.method == "POST":
 #         check_box_list = request.POST.getlist('consumables_check')
 #         search_field = request.POST.get('search_field')
 #         consumable_list = (consumable_list.filter(
 #             name__icontains=search_field,
 #             category__in=check_box_list))
-#
-#     context = {
-#         'consumables': consumable_list,
-#         'page_name': 'Расходники'
-#     }
-#     return render(request, 'catalog/product_list.html', context)
 
 
 def equipment(request):
