@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView
 
-from catalog.models import Consumable, Equipment
+from catalog.models import Consumable, Equipment, Blog
 
 
 class HomeTemplateView(TemplateView):
@@ -35,7 +35,7 @@ class EquipmentListView(ListView):
     #         category__in=check_box_list))
 
 
-class ProductDetailView(DetailView):
+class ConsumableDetailView(DetailView):
     model = Consumable
 
 
@@ -49,4 +49,8 @@ class ConsumableUpdateView(UpdateView):
     model = Consumable
     fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
     success_url = reverse_lazy('catalog:consumables')
+
+
+class BlogListView(ListView):
+    model = Blog
 

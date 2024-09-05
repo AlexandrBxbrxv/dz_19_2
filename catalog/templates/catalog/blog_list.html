@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+{% load catalog_tags %}
+<div class="container">
+  <a class="btn btn-secondary" href="{% url 'catalog:blog_create' %}">Добавить блог</a>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    {% for object in object_list %}
+    <div class="col-6">
+      <div class="card shadow-sm" style="width: 60rem;">
+        <div class="container center">
+          <img src="{{ object.preview | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ object.title|slice:":40" }}</h5>
+          <p class="card-text">{{ object.body|slice:":200" }}</p>
+          <div class="row">
+            <a class="btn btn-secondary col-3 m-1" href="{% url 'catalog:product_detail' item.pk %}">Подробнее</a>
+            <a class="btn btn-warning col-3 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
+            <a class="btn btn-danger col-3 m-1" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
