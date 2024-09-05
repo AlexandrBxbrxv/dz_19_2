@@ -10,7 +10,11 @@
             {% csrf_token %}
             {{ form.as_p }}
           </div>
+          {% if object %}
+          <button class="btn btn-success" type="submit">Обновить</button>
+          {% else %}
           <button class="btn btn-success" type="submit">Создать</button>
+          {% endif %}
         </div>
       </form>
     </div>
