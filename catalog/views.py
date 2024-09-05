@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views.generic import ListView, TemplateView, DetailView
 
-from catalog.models import Product
+from catalog.models import Consumable, Equipment
 
 
 class HomeTemplateView(TemplateView):
@@ -13,43 +13,29 @@ class ContactsTemplateView(TemplateView):
 
 
 class ConsumablesListView(ListView):
-    model = Product
+    model = Consumable
 
-#     if request.method == "POST":
-#         check_box_list = request.POST.getlist('consumables_check')
-#         search_field = request.POST.get('search_field')
-#         consumable_list = (consumable_list.filter(
-#             name__icontains=search_field,
-#             category__in=check_box_list))
+    # if request.method == "POST":
+    #     check_box_list = request.POST.getlist('consumables_check')
+    #     search_field = request.POST.get('search_field')
+    #     consumable_list = (consumable_list.filter(
+    #         name__icontains=search_field,
+    #         category__in=check_box_list))
 
 
-def equipment(request):
-    equipment_list = Product.objects.filter(category__in=[5, 31])  # Только категория принтеры
-    if request.method == "POST":
-        check_box_list = request.POST.getlist('equipment_check')
-        search_field = request.POST.get('search_field')
-        equipment_list = (equipment_list.filter(
-            name__icontains=search_field,
-            category__in=check_box_list))
+class EquipmentListView(ListView):
+    model = Equipment
 
-    context = {
-        'equipment': equipment_list,
-        'page_name': 'Техника'
-    }
-    return render(request, 'catalog/equipment.html', context)
+    # if request.method == "POST":
+    #     check_box_list = request.POST.getlist('equipment_check')
+    #     search_field = request.POST.get('search_field')
+    #     equipment_list = (equipment_list.filter(
+    #         name__icontains=search_field,
+    #         category__in=check_box_list))
 
 
 class ProductDetailView(DetailView):
-    model = Product
-
-
-# def product_detail(request, pk):
-#     product = get_object_or_404(Product, pk=pk)
-#     context = {
-#         'product': product,
-#         'page_name': 'Страница товара'
-#     }
-#     return render(request, 'catalog/product_detail.html', context)
+    model = Consumable
 
 
 def add_product(request):
