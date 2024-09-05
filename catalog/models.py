@@ -51,5 +51,5 @@ class Equipment(models.Model):
 
     class Meta:
         verbose_name = 'техника'
-        verbose_name_plural = 'техники'
+        verbose_name_plural = 'техника'
         ordering = ('price',)
