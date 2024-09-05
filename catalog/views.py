@@ -54,3 +54,6 @@ class ConsumableUpdateView(UpdateView):
 class BlogListView(ListView):
     model = Blog
 
+
+class BlogDetailView(DetailView):
+    model = Blog
