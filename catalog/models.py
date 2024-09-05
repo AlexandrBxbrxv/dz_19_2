@@ -15,10 +15,10 @@ class Category(models.Model):
         verbose_name_plural = 'категории'
 
 
-class Product(models.Model):
+class Consumable(models.Model):
     name = models.CharField(max_length=150, verbose_name='наименование')
     description = models.TextField(**NULLABLE, verbose_name='описание')
-    image = models.ImageField(**NULLABLE, upload_to='product/images', verbose_name='изображение')
+    image = models.ImageField(**NULLABLE, upload_to='consumable/images', verbose_name='изображение')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='категория',
                                  **NULLABLE, related_name='categories')
     price = models.IntegerField(verbose_name='цена')
@@ -29,6 +29,27 @@ class Product(models.Model):
         return f'{self.name}'
 
     class Meta:
-        verbose_name = 'продукт'
-        verbose_name_plural = 'продукты'
+        verbose_name = 'расходный материал'
+        verbose_name_plural = 'расходные материалы'
         ordering = ('price',)
+
+
+# class Equipment(models.Model):
+#     name = models.CharField(max_length=150, verbose_name='наименование')
+#     guarantee = models.IntegerField(default=0, verbose_name='гарантия')
+#     manufacturer = models.CharField(max_length=200, verbose_name='производитель')
+#     description = models.TextField(**NULLABLE, verbose_name='описание')
+#     image = models.ImageField(**NULLABLE, upload_to='product/images', verbose_name='изображение')
+#     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='категория',
+#                                  **NULLABLE, related_name='categories')
+#     price = models.IntegerField(verbose_name='цена')
+#     created_at = models.DateField(**NULLABLE, verbose_name='дата создания')
+#     updated_at = models.DateField(**NULLABLE, verbose_name='дата последнего изменения')
+#
+#     def __str__(self):
+#         return f'{self.name}'
+#
+#     class Meta:
+#         verbose_name = 'техника'
+#         verbose_name_plural = 'техники'
+#         ordering = ('price',)
