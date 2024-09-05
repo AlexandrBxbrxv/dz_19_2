@@ -39,7 +39,7 @@ class Equipment(models.Model):
     guarantee = models.IntegerField(default=0, verbose_name='гарантия')
     manufacturer = models.CharField(max_length=200, verbose_name='производитель')
     description = models.TextField(**NULLABLE, verbose_name='описание')
-    image = models.ImageField(**NULLABLE, upload_to='product/images', verbose_name='изображение')
+    image = models.ImageField(**NULLABLE, upload_to='equipment/images', verbose_name='изображение')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='категория',
                                  **NULLABLE)
     price = models.IntegerField(verbose_name='цена')
