@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, TemplateView, DetailView, CreateView
 
 from catalog.models import Consumable, Equipment
 
@@ -38,15 +39,8 @@ class ProductDetailView(DetailView):
     model = Consumable
 
 
-def add_product(request):
-    context = {
-        'page_name': 'Добавление продукта'
-    }
-    if request.method == "POST":
-        name = request.POST.get('name')
-        price = request.POST.get('price')
-        category = request.POST.get('category')
-        description = request.POST.get('description')
-        image = request.POST.get('image')
+class ConsumableCreateView(CreateView):
+    model = Consumable
+    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    success_url = reverse_lazy('catalog:consumable_list')
 
-    return render(request, 'catalog/add_product.html', context)
