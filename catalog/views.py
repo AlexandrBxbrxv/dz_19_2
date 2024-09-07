@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.models import Consumable, Equipment, Blog
 
@@ -37,6 +37,11 @@ class ConsumableCreateView(CreateView):
 class ConsumableUpdateView(UpdateView):
     model = Consumable
     fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    success_url = reverse_lazy('catalog:consumables')
+
+
+class ConsumableDeleteView(DeleteView):
+    model = Consumable
     success_url = reverse_lazy('catalog:consumables')
 
 
