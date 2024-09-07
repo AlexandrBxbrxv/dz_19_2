@@ -67,9 +67,12 @@
           <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
           <p class="card-text">Цена: {{ item.price }}<br>На складе: None <br>Описание: {{ item.description|slice:":100" }}</p>
           <div class="row">
-            <a class="btn btn-secondary col-3 m-1" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
-            <a class="btn btn-warning col-3 m-1" href="#">В корзину</a>
-            <a class="btn btn-dark col-3 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
+            <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
+            <a class="btn btn-success col-5 m-1" href="#">В корзину</a>
+          </div>
+          <div class="row">
+            <a class="btn btn-warning col-5 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
+            <a class="btn btn-danger col-5 m-1" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
           </div>
 
         </div>
