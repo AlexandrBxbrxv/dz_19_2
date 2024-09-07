@@ -56,7 +56,7 @@
 
 <div class="container mt-3">
   <div class="row">
-    {% for item in equipment %}
+    {% for item in object_list %}
     <div class="col-4">
       <div class="card shadow-sm" style="width: 24rem;">
         <div class="container center">
@@ -70,7 +70,7 @@
             Модель: название<br>
             Описание: {{ item.description|slice:":150" }}</p>
           <div class="row">
-            <a class="btn btn-secondary col-4 m-1" href="{% url 'catalog:product_detail' item.pk %}">Подробнее</a>
+            <a class="btn btn-secondary col-4 m-1" href="{% url 'catalog:equipment_detail' item.pk %}">Подробнее</a>
             <a class="btn btn-warning col-4 m-1" href="#">В корзину</a>
           </div>
         </div>
