@@ -24,6 +24,22 @@ class ConsumablesListView(ListView):
     #         category__in=check_box_list))
 
 
+class ConsumableDetailView(DetailView):
+    model = Consumable
+
+
+class ConsumableCreateView(CreateView):
+    model = Consumable
+    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    success_url = reverse_lazy('catalog:consumables')
+
+
+class ConsumableUpdateView(UpdateView):
+    model = Consumable
+    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    success_url = reverse_lazy('catalog:consumables')
+
+
 class EquipmentListView(ListView):
     model = Equipment
 
@@ -35,20 +51,8 @@ class EquipmentListView(ListView):
     #         category__in=check_box_list))
 
 
-class ConsumableDetailView(DetailView):
-    model = Consumable
-
-
-class ConsumableCreateView(CreateView):
-    model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
-    success_url = reverse_lazy('catalog:consumable_list')
-
-
-class ConsumableUpdateView(UpdateView):
-    model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
-    success_url = reverse_lazy('catalog:consumables')
+class EquipmentDetailView(DetailView):
+    model = Equipment
 
 
 class BlogListView(ListView):
@@ -57,3 +61,15 @@ class BlogListView(ListView):
 
 class BlogDetailView(DetailView):
     model = Blog
+
+
+class BlogCreateView(CreateView):
+    model = Blog
+    fields = ('title', 'body', 'preview', 'created_at')
+    success_url = reverse_lazy('catalog:blogs')
+
+
+class BlogUpdateView(UpdateView):
+    model = Blog
+    fields = ('title', 'body', 'preview', 'created_at', 'is_published')
+    success_url = reverse_lazy('catalog:blogs')

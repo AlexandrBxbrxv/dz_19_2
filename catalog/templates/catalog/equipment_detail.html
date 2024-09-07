@@ -1,0 +1,31 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+{% load catalog_tags %}
+<div class="container mt-1">
+  <div class="row">
+    <div class="container col-8">
+      <div class="card">
+      <img src="{{ object.image | media_filter }}">
+      </div>
+    </div>
+    <div class="container col-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ object.name }}</h5>
+          <p class="card-text">Цена: {{ object.price }} руб.<br>На складе: None</p>
+          <p class="card-text">Гарантия: {{ object.guarantee }} года<br>
+            Страна производитель: {{ object.manufacturer }}<br>
+            Описание: {{ object.description }}</p>
+          <div class="row">
+            <a class="btn btn-secondary col-4 m-1" href="{% url 'catalog:equipments' %}">Назад</a>
+            <a class="btn btn-warning col-4 m-1" href="#">В корзину</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
