@@ -13,6 +13,7 @@
       <div class="card shadow-sm" style="width: 41rem;">
         <div class="container center">
           <h5 class="card-title text-center">{{ object.title|slice:":40" }}</h5>
+          <p>Просмотров: {{ object.views_count }}</p>
           <div class="row">
             <img class="card-img col-6" style="width: 20rem; height: 20rem;" src="{{ object.preview | media_filter }}">
             <div class="card-body col-6">
