@@ -64,11 +64,18 @@ class EquipmentDetailView(DetailView):
 class BlogListView(ListView):
     model = Blog
 
+    def get_queryset(self, *args, **kwargs):
+        """Фильтр для вывода на страницу только опубликованных блогов"""
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
 
 class BlogDetailView(DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
+        """Добавление просмотра после обновления страницы"""
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
@@ -81,6 +88,7 @@ class BlogCreateView(CreateView):
     success_url = reverse_lazy('catalog:blogs')
 
     def form_valid(self, form):
+        """Создаёт человеко понятный URL"""
         if form.is_valid():
             new_blog = form.save()
             new_blog.slug = slugify(new_blog.title)
