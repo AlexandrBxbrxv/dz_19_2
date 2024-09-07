@@ -18,9 +18,8 @@
           <h5 class="card-title">{{ object.title|slice:":40" }}</h5>
           <p class="card-text">{{ object.body|slice:":200" }}</p>
           <div class="row">
-            <a class="btn btn-secondary col-3 m-1" href="{% url 'catalog:product_detail' item.pk %}">Подробнее</a>
-            <a class="btn btn-warning col-3 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
-            <a class="btn btn-danger col-3 m-1" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
+            <a class="btn btn-secondary col-3 m-1" href="{% url 'catalog:blog_detail' object.pk %}">Подробнее</a>
+            <a class="btn btn-warning col-3 m-1" href="{% url 'catalog:blog_update' object.pk %}">Изменить</a>
           </div>
 
         </div>
