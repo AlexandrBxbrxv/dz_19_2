@@ -78,3 +78,8 @@ class BlogUpdateView(UpdateView):
     model = Blog
     fields = ('title', 'body', 'preview', 'created_at', 'is_published')
     success_url = reverse_lazy('catalog:blogs')
+
+
+class BlogDeleteView(DeleteView):
+    model = Blog
+    success_url = reverse_lazy('catalog:blogs')
