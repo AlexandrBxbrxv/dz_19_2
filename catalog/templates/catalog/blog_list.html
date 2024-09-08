@@ -1,0 +1,33 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+{% load catalog_tags %}
+<div class="container">
+  <a class="btn btn-secondary" href="{% url 'catalog:blog_create' %}">Добавить блог</a>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    {% for object in object_list %}
+    <div class="mt-3">
+      <div class="card shadow-sm" style="width: 41rem;">
+        <div class="container center">
+          <h5 class="card-title text-center">{{ object.title|slice:":40" }}</h5>
+          <p>Просмотров: {{ object.views_count }} slug: {{ object.slug }}</p>
+          <div class="row">
+            <img class="card-img col-6" style="width: 20rem; height: 20rem;" src="{{ object.preview | media_filter }}">
+            <div class="card-body col-6">
+              <p class="card-text">{{ object.body|slice:":200" }}</p>
+            </div>
+            <div class="row">
+              <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:blog_detail' object.pk %}">Подробнее</a>
+              <a class="btn btn-warning col-3 m-1" href="{% url 'catalog:blog_update' object.pk %}">Изменить</a>
+              <a class="btn btn-danger col-3 m-1" href="{% url 'catalog:blog_delete' object.pk %}">Удалить</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock %}

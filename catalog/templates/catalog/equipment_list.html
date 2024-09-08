@@ -1,0 +1,82 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+{% load catalog_tags %}
+
+<div class="container mt-1">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="container col-8">
+        <div class="card">
+          <div class="container mt-1">
+            <p>Фильтры</p>
+            <div class="row">
+              <div class="container col-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=5 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    Принтеры
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=31 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    Калькуляторы
+                  </label>
+                </div>
+              </div>
+              <div class="container col-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=0 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    категория
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value=0 name="equipment_check" checked="checked">
+                  <label class="form-check-label">
+                    категория
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container col-4">
+        <input type="text" name="search_field" placeholder="Название">
+        <button type="submit">Найти</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    {% for item in object_list %}
+    <div class="col-4">
+      <div class="card shadow-sm" style="width: 24rem;">
+        <div class="container center">
+        <img src="{{ item.image | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name|slice:":50" }}</h5>
+          <p class="card-text">Цена: {{ item.price }} руб.<br>На складе: None</p>
+          <h6 class="card-text">характеристики</h6>
+          <p class="card-text">Производитель: название<br>
+            Модель: название<br>
+            Описание: {{ item.description|slice:":150" }}</p>
+          <div class="row">
+            <a class="btn btn-secondary col-4 m-1" href="{% url 'catalog:equipment_detail' item.pk %}">Подробнее</a>
+            <a class="btn btn-warning col-4 m-1" href="#">В корзину</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
