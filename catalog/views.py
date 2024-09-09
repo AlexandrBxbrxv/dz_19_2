@@ -1,9 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
 from catalog.models import Consumable, Equipment, Blog
+
+
+def consumable_purchase_count(request, pk):
+    product = get_object_or_404(Consumable, pk=pk)
+    product.purchases_count += 1
+    product.save()
+
+    return redirect(reverse(f'catalog:consumables'))
 
 
 class HomeTemplateView(TemplateView):
