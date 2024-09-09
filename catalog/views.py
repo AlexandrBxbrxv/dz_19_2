@@ -14,12 +14,17 @@ def consumable_purchase_count(request, pk):
     return redirect(reverse(f'catalog:consumables'))
 
 
+def popular_products(request):
+    popular_products = []
+    consumables = Consumable.objects.order_by('-purchases_count')[:3]
+    return consumables
+
 class HomeTemplateView(TemplateView):
     template_name = 'catalog/home.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'title': 'Главная'})
+        context.update({'title': 'Главная', 'popular_products': popular_products(self.request)})
         return context
 
 
