@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
@@ -9,24 +9,37 @@ from catalog.models import Consumable, Equipment, Blog
 class HomeTemplateView(TemplateView):
     template_name = 'catalog/home.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Главная'})
+        return context
+
 
 class ContactsTemplateView(TemplateView):
     template_name = 'catalog/contacts.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Контакты'})
+        return context
 
 
 class ConsumablesListView(ListView):
     model = Consumable
 
-    # if request.method == "POST":
-    #     check_box_list = request.POST.getlist('consumables_check')
-    #     search_field = request.POST.get('search_field')
-    #     consumable_list = (consumable_list.filter(
-    #         name__icontains=search_field,
-    #         category__in=check_box_list))
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Расходники'})
+        return context
 
 
 class ConsumableDetailView(DetailView):
     model = Consumable
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Подробности товара'})
+        return context
 
 
 class ConsumableCreateView(CreateView):
@@ -49,16 +62,19 @@ class ConsumableDeleteView(DeleteView):
 class EquipmentListView(ListView):
     model = Equipment
 
-    # if request.method == "POST":
-    #     check_box_list = request.POST.getlist('equipment_check')
-    #     search_field = request.POST.get('search_field')
-    #     equipment_list = (equipment_list.filter(
-    #         name__icontains=search_field,
-    #         category__in=check_box_list))
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Техника'})
+        return context
 
 
 class EquipmentDetailView(DetailView):
     model = Equipment
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Подробности товара'})
+        return context
 
 
 class BlogListView(ListView):
@@ -70,6 +86,11 @@ class BlogListView(ListView):
         queryset = queryset.filter(is_published=True)
         return queryset
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Блоги'})
+        return context
+
 
 class BlogDetailView(DetailView):
     model = Blog
@@ -80,6 +101,11 @@ class BlogDetailView(DetailView):
         self.object.views_count += 1
         self.object.save()
         return self.object
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Подробности блога'})
+        return context
 
 
 class BlogCreateView(CreateView):
