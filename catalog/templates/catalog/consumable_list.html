@@ -69,7 +69,6 @@
           <div class="row">
             <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
             <a class="btn btn-success col-5 m-1" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
-            <p>{{ item.purchases_count }}</p>
           </div>
           <div class="row">
             <a class="btn btn-warning col-5 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
