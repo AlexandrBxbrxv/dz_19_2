@@ -10,14 +10,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Consumable)
 class ConsumableAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'category')
+    list_display = ('id', 'name', 'price', 'category', 'purchases_count')
     list_filter = ('category',)
     search_fields = ('name',)
 
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'category', 'guarantee')
+    list_display = ('id', 'name', 'price', 'category', 'guarantee', 'purchases_count')
     list_filter = ('category',)
     search_fields = ('name',)
 
