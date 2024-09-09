@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% load catalog_tags %}
 <div class="container mt-2">
   <div class="card">
     <div class="card-body">
@@ -16,37 +17,28 @@
 
 <div class="container mt-5">
   <p class="h2">Популярные товары</p>
-  <div class="card-group">
-    <div class="card">
-      <img src="/static/catalog/img/a4.jfif" alt="a4">
-      <div class="card-body">
-        <h5 class="card-title">Бумага А4</h5>
-        <p class="card-text">500 листов, 289 р.</p>
-      </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-primary">Перейти на страницу товара</button>
-      </div>
-    </div>
-    <div class="card">
-      <img src="/static/catalog/img/710kh432_2_14.jpg" alt="710kh432_2_14">
-      <div class="card-body">
-        <h5 class="card-title">Картридж SP 3020/3025</h5>
-        <p class="card-text">Для Xerox, Цвет: черный, 663 р.</p>
-      </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-primary">Перейти на страницу товара</button>
-      </div>
-    </div>
-    <div class="card">
-      <img src="/static/catalog/img/skrepki.jpg" alt="skrepki">
-      <div class="card-body">
-        <h5 class="card-title">Скрепки канцелярские</h5>
-        <p class="card-text">Размер: 50мм., 50 штук, 295 р.</p>
-      </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-primary">Перейти на страницу товара</button>
+  <div class="container mt-3">
+  <div class="row">
+    {% for item in popular_products %}
+    <div class="col-3">
+      <div class="card shadow-sm" style="width: 20rem;">
+        <div class="container center">
+          <img src="{{ item.image | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
+          <p class="card-text">Цена: {{ item.price }}<br>На складе: None <br>Описание: {{ item.description|slice:":100" }}</p>
+          <div class="row">
+            <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
+            <a class="btn btn-success col-5 m-1" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
+            <p>Куплено: {{ item.purchases_count }} раз</p>
+          </div>
+
+        </div>
       </div>
     </div>
+    {% endfor %}
   </div>
+</div>
 </div>
 {% endblock %}
