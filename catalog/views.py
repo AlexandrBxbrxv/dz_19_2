@@ -6,6 +6,7 @@ from catalog.models import Consumable, Equipment
 
 
 def consumable_purchase_count(request, pk):
+    """Увеличивает счетчик покупок товара модели расходный материал"""
     product = get_object_or_404(Consumable, pk=pk)
     product.purchases_count += 1
     product.save()
@@ -14,11 +15,12 @@ def consumable_purchase_count(request, pk):
 
 
 def popular_products(request):
-    popular_products = []
+    """Выводит топ 3 наиболее покупаемых товаров модели расходный материал"""
     consumables = Consumable.objects.order_by('-purchases_count')[:3]
     return consumables
 
 
+# Страницы без CRUD #####################################
 class HomeTemplateView(TemplateView):
     template_name = 'catalog/home.html'
 
@@ -35,6 +37,13 @@ class ContactsTemplateView(TemplateView):
         context = super().get_context_data(**kwargs)
         context.update({'title': 'Контакты'})
         return context
+
+
+# система CRUD для модели Расходный материал ########################################
+class ConsumableCreateView(CreateView):
+    model = Consumable
+    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    success_url = reverse_lazy('catalog:consumables')
 
 
 class ConsumablesListView(ListView):
@@ -55,12 +64,6 @@ class ConsumableDetailView(DetailView):
         return context
 
 
-class ConsumableCreateView(CreateView):
-    model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
-    success_url = reverse_lazy('catalog:consumables')
-
-
 class ConsumableUpdateView(UpdateView):
     model = Consumable
     fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
@@ -72,6 +75,7 @@ class ConsumableDeleteView(DeleteView):
     success_url = reverse_lazy('catalog:consumables')
 
 
+# система CRUD для модели Техника ########################################
 class EquipmentListView(ListView):
     model = Equipment
 

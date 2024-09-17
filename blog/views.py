@@ -1,9 +1,22 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, DeleteView, CreateView, DetailView, ListView
 from pytils.translit import slugify
 
 from blog.models import Blog
+
+
+# CRUD для модели Блог ###############################
+class BlogCreateView(CreateView):
+    model = Blog
+    fields = ('title', 'body', 'preview', 'created_at')
+    success_url = reverse_lazy('blog:blogs')
+
+    def form_valid(self, form):
+        """Создаёт человеко понятный URL"""
+        if form.is_valid():
+            new_blog = form.save()
+            new_blog.slug = slugify(new_blog.title)
+        return super().form_valid(form)
 
 
 class BlogListView(ListView):
@@ -35,19 +48,6 @@ class BlogDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context.update({'title': 'Подробности блога'})
         return context
-
-
-class BlogCreateView(CreateView):
-    model = Blog
-    fields = ('title', 'body', 'preview', 'created_at')
-    success_url = reverse_lazy('blog:blogs')
-
-    def form_valid(self, form):
-        """Создаёт человеко понятный URL"""
-        if form.is_valid():
-            new_blog = form.save()
-            new_blog.slug = slugify(new_blog.title)
-        return super().form_valid(form)
 
 
 class BlogUpdateView(UpdateView):
