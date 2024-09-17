@@ -1,5 +1,5 @@
 from django.contrib import admin
-from catalog.models import Category, Consumable, Equipment, Blog
+from catalog.models import Category, Consumable, Equipment
 
 
 @admin.register(Category)
@@ -20,10 +20,3 @@ class EquipmentAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'category', 'guarantee', 'purchases_count')
     list_filter = ('category',)
     search_fields = ('name',)
-
-
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'is_published', 'slug')
-    list_filter = ('is_published',)
-    search_fields = ('title',)
