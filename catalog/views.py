@@ -2,6 +2,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 
+from catalog.forms import ConsumableForm
 from catalog.models import Consumable, Equipment
 
 
@@ -66,7 +67,7 @@ class ConsumableDetailView(DetailView):
 
 class ConsumableUpdateView(UpdateView):
     model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
 
 
