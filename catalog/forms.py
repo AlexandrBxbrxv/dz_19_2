@@ -6,7 +6,17 @@ from catalog.models import Consumable
 FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
 
-class ConsumableForm(forms.ModelForm):
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'
+
+
+class ConsumableForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Consumable
         exclude = ('created_at', 'updated_at', 'purchases_count',)
@@ -24,4 +34,3 @@ class ConsumableForm(forms.ModelForm):
             if forbidden_word in clean_description:
                 raise forms.ValidationError('Описание не должно содержать запрещенных слов')
         return clean_description
-
