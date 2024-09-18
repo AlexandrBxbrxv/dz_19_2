@@ -1,3 +1,4 @@
+from django.forms import inlineformset_factory
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
@@ -74,6 +75,23 @@ class ConsumableUpdateView(UpdateView):
     model = Consumable
     form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        ConsumableFormset = inlineformset_factory(Consumable, Version, form=ConsumableForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = ConsumableFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = ConsumableFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
 
 
 class ConsumableDeleteView(DeleteView):
