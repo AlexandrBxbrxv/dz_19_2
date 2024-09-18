@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ConsumableForm
-from catalog.models import Consumable, Equipment
+from catalog.models import Consumable, Equipment, Version
 
 
 def consumable_purchase_count(request, pk):
@@ -52,6 +52,11 @@ class ConsumablesListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        active_versions = Version.objects.filter(is_current_version=True)
+        active_consumables_pk = []
+        for version in active_versions:
+            active_consumables_pk.append(version.consumable_product.pk)
+        context['object_list'] = Consumable.objects.filter(pk__in=active_consumables_pk)
         context.update({'title': 'Расходники'})
         return context
 
