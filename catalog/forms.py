@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import BooleanField
 
 from catalog.models import Consumable
 
@@ -10,20 +11,17 @@ class ConsumableForm(forms.ModelForm):
         model = Consumable
         exclude = ('created_at', 'updated_at', 'purchases_count',)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
     def clean_name(self):
-        clean_data = self.cleaned_data()['name']
-        if FORBIDDEN_WORDS in clean_data:
-            raise forms.ValidationError('Наименование не должно содержать запрещенных слов')
-        return
+        clean_name = self.cleaned_data['name']
+        for forbidden_word in FORBIDDEN_WORDS:
+            if forbidden_word in clean_name:
+                raise forms.ValidationError('Наименование не должно содержать запрещенных слов')
+        return clean_name
 
     def clean_description(self):
-        clean_data = self.cleaned_data()['description']
-        if FORBIDDEN_WORDS in clean_data:
-            raise forms.ValidationError('Описание не должно содержать запрещенных слов')
-        return
+        clean_description = self.cleaned_data['description']
+        for forbidden_word in FORBIDDEN_WORDS:
+            if forbidden_word in clean_description:
+                raise forms.ValidationError('Описание не должно содержать запрещенных слов')
+        return clean_description
 
