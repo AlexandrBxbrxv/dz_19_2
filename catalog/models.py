@@ -55,3 +55,19 @@ class Equipment(models.Model):
         verbose_name = 'техника'
         verbose_name_plural = 'техника'
         ordering = ('price', 'purchases_count',)
+
+
+class Version(models.Model):
+    consumable_product = models.ForeignKey(Consumable, on_delete=models.SET_NULL, verbose_name='продукт расходник',
+                                           **NULLABLE)
+    number = models.PositiveIntegerField(default=1, verbose_name='номер версии')
+    name = models.CharField(max_length=150, verbose_name='название версии')
+    is_current_version = models.BooleanField(default=True, verbose_name='активность версии')
+
+    def __str__(self):
+        return f'{self.name}, №{self.number}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ('number', 'name',)
