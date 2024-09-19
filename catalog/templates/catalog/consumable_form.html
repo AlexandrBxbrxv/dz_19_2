@@ -1,23 +1,54 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<div class="container col-6">
+<div class="container">
   <div class="row">
-    <div class="container col-6">
-      <form class="row" method="post" enctype="multipart/form-data">
+    <form class="row" method="post" enctype="multipart/form-data">
+
+      <div class="container col-6">
         <div class="card">
+          <div class="card-header">
+            <h4>Продукт расходный материал</h4>
+          </div>
           <div class="card-body">
             {% csrf_token %}
             {{ form.as_p }}
           </div>
-          {% if object %}
-          <button class="btn btn-success" type="submit">Обновить</button>
-          {% else %}
-          <button class="btn btn-success" type="submit">Создать</button>
-          {% endif %}
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-6">
+                {% if object %}
+                <button class="btn btn-success col-12" type="submit">Обновить</button>
+                {% else %}
+                <button class="btn btn-success col-12" type="submit">Создать</button>
+                {% endif %}
+              </div>
+              <div class="col-6">
+                <a class="btn btn-secondary col-12" href="{% url 'catalog:consumables' %}">Назад</a>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div class="col-6">
+        {% if object %}
+        <div class="card">
+          <div class="card-header">
+            <h4>Версия продукта</h4>
+          </div>
+          {{ formset.management_form }}
+          {% for form in formset.forms %}
+          <div class="card-body">
+            {{ form.as_p }}
+            <hr>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+    </form>
   </div>
 </div>
 {% endblock %}
