@@ -8,8 +8,14 @@ from blog.models import Blog
 class Command(BaseCommand):
     """Команда для заполнения базы данных"""
     def handle(self, *args, **options):
+
+        all_fixtures = []
+
         with open('fixtures/catalog_data.json', 'r', encoding='utf-8') as file:
-            dict_list = json.loads(file.read())
+            all_fixtures.extend(json.loads(file.read()))
+
+        with open('fixtures/blog_data.json', 'r', encoding='utf-8') as file:
+            all_fixtures.extend(json.loads(file.read()))
 
 # сортировка
             categories = []
@@ -18,7 +24,7 @@ class Command(BaseCommand):
             equipments = []
             blogs = []
 
-        for item in dict_list:
+        for item in all_fixtures:
             if item['model'] == 'catalog.category':
                 categories.append(item)
             elif item['model'] == 'catalog.consumable':
@@ -73,7 +79,7 @@ class Command(BaseCommand):
                 pk=item['pk'],
                 name=fields['name'],
                 number=fields['number'],
-                consumable_product=Consumable.objects.get(pk=fields['consumable']),
+                consumable_product=Consumable.objects.get(pk=fields['consumable_product']),
                 is_current_version=fields['is_current_version']
             ))
         Version.objects.bulk_create(versions_for_create)
@@ -112,7 +118,3 @@ class Command(BaseCommand):
                 created_at=fields['created_at']
             ))
         Blog.objects.bulk_create(blogs_for_create)
-
-
-
-
