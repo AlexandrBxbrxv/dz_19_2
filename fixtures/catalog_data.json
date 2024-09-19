@@ -56,6 +56,7 @@
       "image": "consumable/images/a4.jfif",
       "category": 1,
       "price": 289,
+      "purchases_count": 29,
       "created_at": "2024-09-07",
       "updated_at": "2024-09-07"
     }
@@ -69,6 +70,7 @@
       "image": "consumable/images/710kh432_2_14_MfMRMNN.jpg",
       "category": 3,
       "price": 663,
+      "purchases_count": 22,
       "created_at": null,
       "updated_at": null
     }
@@ -82,6 +84,7 @@
       "image": "consumable/images/skrepki.jpg",
       "category": 4,
       "price": 129,
+      "purchases_count": 14,
       "created_at": "2024-09-01",
       "updated_at": "2024-09-01"
     }
@@ -95,6 +98,7 @@
       "image": "consumable/images/53254326.webp",
       "category": 2,
       "price": 123,
+      "purchases_count": 23,
       "created_at": "2024-09-01",
       "updated_at": null
     }
@@ -108,6 +112,7 @@
       "image": "",
       "category": 1,
       "price": 439,
+      "purchases_count": 5,
       "created_at": null,
       "updated_at": null
     }
@@ -117,66 +122,55 @@
     "pk": 1,
     "fields": {
       "name": "Принтер",
-      "guarantee": 3,
+      "guarantee": "3",
       "manufacturer": "Китай",
       "description": "Phasellus viverra purus sed metus mollis, commodo scelerisque orci blandit. Aliquam ultricies enim sit amet urna viverra aliquet. Pellentesque quis dui et magna luctus lobortis vel a ligula. Phasellus ut elit nec nisl pharetra sollicitudin. Phasellus non gravida diam, id laoreet erat. Integer commodo lacinia tortor in rhoncus. Suspendisse porta faucibus quam, ut rutrum justo pharetra convallis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla tellus mauris, ornare a suscipit ac, maximus et nunc.",
       "image": "equipment/images/5085bcff4901e2c475d9520d32213e94ef9c837b13a10bc76da9874533aa203e.jpg.webp",
       "category": 5,
       "price": 16499,
+      "purchases_count": 0,
       "created_at": "2024-09-07",
       "updated_at": "2024-09-07"
     }
   },
   {
-    "model": "catalog.blog",
+    "model": "catalog.version",
+    "pk": 2,
+    "fields": {
+      "consumable_product": 3,
+      "number": 2,
+      "name": "50-3 рев. 2",
+      "is_current_version": true
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 3,
+    "fields": {
+      "consumable_product": 3,
+      "number": 1,
+      "name": "50-3 рев. 1",
+      "is_current_version": false
+    }
+  },
+  {
+    "model": "catalog.version",
     "pk": 4,
     "fields": {
-      "title": "не реклама",
-      "slug": null,
-      "body": "Этот принтер от этой компании просто класс!",
-      "preview": "blog/image/5085bcff4901e2c475d9520d32213e94ef9c837b13a10bc76da9874533aa203e.jpg.webp",
-      "created_at": "2024-09-07",
-      "is_published": true,
-      "views_count": 7
+      "consumable_product": 8,
+      "number": 1,
+      "name": "Attache №24",
+      "is_current_version": true
     }
   },
   {
-    "model": "catalog.blog",
+    "model": "catalog.version",
     "pk": 5,
     "fields": {
-      "title": "Lorem Ipsum",
-      "slug": null,
-      "body": "Donec auctor tincidunt nulla, eget dictum purus accumsan posuere. Pellentesque eu interdum ex. Duis rhoncus nisi odio, eget commodo ante posuere a. Mauris volutpat enim nec nisi rhoncus viverra. Duis dictum turpis erat, eu consequat urna sagittis tincidunt. Integer nisl odio, finibus eu magna eu, hendrerit dictum metus. Curabitur accumsan, est sed volutpat dignissim, urna nulla sagittis ipsum, ut iaculis tortor sem eget mi. Sed dignissim velit in eros dictum tristique. Etiam sem nisl, porttitor et blandit ac, interdum eu sapien. Nulla sit amet sodales mi, at aliquam velit. Duis eu mi id purus luctus malesuada.",
-      "preview": "blog/image/LdA0WR.gif",
-      "created_at": null,
-      "is_published": true,
-      "views_count": 33
-    }
-  },
-  {
-    "model": "catalog.blog",
-    "pk": 6,
-    "fields": {
-      "title": "название",
-      "slug": null,
-      "body": "# этот блог ещё в разработке\r\nDuis rhoncus nisi odio, eget commodo ante posuere a. Mauris volutpat enim nec nisi rhoncus viverra. Duis",
-      "preview": "",
-      "created_at": null,
-      "is_published": false,
-      "views_count": 4
-    }
-  },
-  {
-    "model": "catalog.blog",
-    "pk": 7,
-    "fields": {
-      "title": "Тест slug",
-      "slug": "test-slug",
-      "body": "тест",
-      "preview": "",
-      "created_at": null,
-      "is_published": true,
-      "views_count": 0
+      "consumable_product": 3,
+      "number": 3,
+      "name": "50-4",
+      "is_current_version": true
     }
   }
 ]
