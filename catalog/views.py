@@ -44,7 +44,7 @@ class ContactsTemplateView(TemplateView):
 # система CRUD для модели Расходный материал ########################################
 class ConsumableCreateView(CreateView):
     model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
 
 
