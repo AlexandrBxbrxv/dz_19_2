@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import BooleanField
 
-from catalog.models import Consumable
+from catalog.models import Consumable, Version
 
 FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
@@ -34,3 +34,9 @@ class ConsumableForm(StyleFormMixin, forms.ModelForm):
             if forbidden_word in clean_description:
                 raise forms.ValidationError('Описание не должно содержать запрещенных слов')
         return clean_description
+
+
+class VersionForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Version
+        fields = "__all__"
