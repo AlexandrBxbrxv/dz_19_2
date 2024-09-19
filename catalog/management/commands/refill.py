@@ -1,7 +1,8 @@
 from django.core.management import BaseCommand
 import json
 
-from catalog.models import Category, Consumable, Equipment, Blog
+from catalog.models import Category, Consumable, Equipment, Version
+from blog.models import Blog
 
 
 class Command(BaseCommand):
@@ -13,6 +14,7 @@ class Command(BaseCommand):
 # сортировка
             categories = []
             consumables = []
+            versions = []
             equipments = []
             blogs = []
 
@@ -21,12 +23,15 @@ class Command(BaseCommand):
                 categories.append(item)
             elif item['model'] == 'catalog.consumable':
                 consumables.append(item)
+            elif item['model'] == 'catalog.version':
+                versions.append(item)
             elif item['model'] == 'catalog.equipment':
                 equipments.append(item)
-            elif item['model'] == 'catalog.blog':
+            elif item['model'] == 'blog.blog':
                 blogs.append(item)
 
 # отчистка базы данных
+        Version.objects.all().delete()
         Consumable.objects.all().delete()
         Equipment.objects.all().delete()
         Blog.objects.all().delete()
@@ -54,10 +59,24 @@ class Command(BaseCommand):
                 image=fields['image'],
                 category=Category.objects.get(pk=fields['category']),
                 price=fields['price'],
+                purchases_count=fields['purchases_count'],
                 created_at=fields['created_at'],
                 updated_at=fields['updated_at']
-                ))
+            ))
         Consumable.objects.bulk_create(consumables_for_create)
+
+# создание объектов модели ВЕРСИЯ для расходных материалов
+        versions_for_create = []
+        for item in versions:
+            fields = item['fields']
+            versions_for_create.append(Version(
+                pk=item['pk'],
+                name=fields['name'],
+                number=fields['number'],
+                consumable_product=Consumable.objects.get(pk=fields['consumable']),
+                is_current_version=fields['is_current_version']
+            ))
+        Version.objects.bulk_create(versions_for_create)
 
 # создание объектов модели ТЕХНИКА
         equipments_for_create = []
@@ -72,6 +91,7 @@ class Command(BaseCommand):
                 price=fields['price'],
                 guarantee=fields['guarantee'],
                 manufacturer=fields['manufacturer'],
+                purchases_count=fields['purchases_count'],
                 created_at=fields['created_at'],
                 updated_at=fields['updated_at']
             ))
