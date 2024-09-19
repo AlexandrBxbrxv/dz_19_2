@@ -3,7 +3,7 @@
 
 {% load catalog_tags %}
 <div class="container">
-  <a class="btn btn-secondary" href="{% url 'catalog:blog_create' %}">Добавить блог</a>
+  <a class="btn btn-secondary" href="{% url 'blog:blog_create' %}">Добавить блог</a>
 </div>
 
 <div class="container mt-3">
@@ -20,9 +20,9 @@
               <p class="card-text">{{ object.body|slice:":200" }}</p>
             </div>
             <div class="row">
-              <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:blog_detail' object.pk %}">Подробнее</a>
-              <a class="btn btn-warning col-3 m-1" href="{% url 'catalog:blog_update' object.pk %}">Изменить</a>
-              <a class="btn btn-danger col-3 m-1" href="{% url 'catalog:blog_delete' object.pk %}">Удалить</a>
+              <a class="btn btn-secondary col-5 m-1" href="{% url 'blog:blog_detail' object.pk %}">Подробнее</a>
+              <a class="btn btn-warning col-3 m-1" href="{% url 'blog:blog_update' object.pk %}">Изменить</a>
+              <a class="btn btn-danger col-3 m-1" href="{% url 'blog:blog_delete' object.pk %}">Удалить</a>
             </div>
           </div>
         </div>

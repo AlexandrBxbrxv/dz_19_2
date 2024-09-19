@@ -18,7 +18,7 @@
           <p class="card-text">Описание: {{ object.description }}</p>
           <div class="row">
             <a class="btn btn-secondary col-4 m-1" href="{% url 'catalog:consumables' %}">Назад</a>
-            <a class="btn btn-warning col-4 m-1" href="#">В корзину</a>
+            <a class="btn btn-success col-4 m-1" href="{% url 'catalog:consumable_purchase' object.pk %}">Купить</a>
           </div>
         </div>
       </div>

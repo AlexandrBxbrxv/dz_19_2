@@ -22,6 +22,7 @@ class Consumable(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='категория',
                                  **NULLABLE)
     price = models.IntegerField(verbose_name='цена')
+    purchases_count = models.IntegerField(default=0, verbose_name='единиц куплено')
     created_at = models.DateField(**NULLABLE, verbose_name='дата создания')
     updated_at = models.DateField(**NULLABLE, verbose_name='дата последнего изменения')
 
@@ -31,18 +32,19 @@ class Consumable(models.Model):
     class Meta:
         verbose_name = 'расходный материал'
         verbose_name_plural = 'расходные материалы'
-        ordering = ('price',)
+        ordering = ('price', 'purchases_count',)
 
 
 class Equipment(models.Model):
     name = models.CharField(max_length=150, verbose_name='наименование')
-    guarantee = models.IntegerField(default=0, verbose_name='гарантия')
+    guarantee = models.CharField(max_length=100, verbose_name='гарантия')
     manufacturer = models.CharField(max_length=200, verbose_name='производитель')
     description = models.TextField(**NULLABLE, verbose_name='описание')
     image = models.ImageField(**NULLABLE, upload_to='equipment/images', verbose_name='изображение')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='категория',
                                  **NULLABLE)
     price = models.IntegerField(verbose_name='цена')
+    purchases_count = models.IntegerField(default=0, verbose_name='единиц куплено')
     created_at = models.DateField(**NULLABLE, verbose_name='дата создания')
     updated_at = models.DateField(**NULLABLE, verbose_name='дата последнего изменения')
 
@@ -52,18 +54,20 @@ class Equipment(models.Model):
     class Meta:
         verbose_name = 'техника'
         verbose_name_plural = 'техника'
-        ordering = ('price',)
+        ordering = ('price', 'purchases_count',)
 
 
-class Blog(models.Model):
-    title = models.CharField(max_length=150, verbose_name='заголовок')
-    slug = models.CharField(max_length=150, verbose_name='slug', **NULLABLE)
-    body = models.TextField(verbose_name='контент')
-    preview = models.ImageField(upload_to='blog/image', verbose_name='превью', **NULLABLE)
-    created_at = models.DateField(**NULLABLE, verbose_name='дата создания')
-    is_published = models.BooleanField(default=True, verbose_name='опубликовано')
-    views_count = models.IntegerField(default=0, verbose_name='количество просмотров')
+class Version(models.Model):
+    consumable_product = models.ForeignKey(Consumable, on_delete=models.SET_NULL, verbose_name='продукт расходник',
+                                           **NULLABLE)
+    number = models.PositiveIntegerField(default=1, verbose_name='номер версии')
+    name = models.CharField(max_length=150, verbose_name='название версии')
+    is_current_version = models.BooleanField(default=True, verbose_name='активность версии')
+
+    def __str__(self):
+        return f'{self.name}, №{self.number}'
 
     class Meta:
-        verbose_name = 'блог'
-        verbose_name_plural = 'блоги'
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ('number', 'name',)

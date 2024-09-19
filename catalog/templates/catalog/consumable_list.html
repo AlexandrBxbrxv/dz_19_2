@@ -68,7 +68,7 @@
           <p class="card-text">Цена: {{ item.price }}<br>На складе: None <br>Описание: {{ item.description|slice:":100" }}</p>
           <div class="row">
             <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
-            <a class="btn btn-success col-5 m-1" href="#">В корзину</a>
+            <a class="btn btn-success col-5 m-1" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
           </div>
           <div class="row">
             <a class="btn btn-warning col-5 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>

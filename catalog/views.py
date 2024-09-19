@@ -1,44 +1,97 @@
-from django.shortcuts import render
+from django.forms import inlineformset_factory
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
-from pytils.translit import slugify
 
-from catalog.models import Consumable, Equipment, Blog
+from catalog.forms import ConsumableForm
+from catalog.models import Consumable, Equipment, Version
 
 
+def consumable_purchase_count(request, pk):
+    """Увеличивает счетчик покупок товара модели расходный материал"""
+    product = get_object_or_404(Consumable, pk=pk)
+    product.purchases_count += 1
+    product.save()
+
+    return redirect(reverse(f'catalog:consumables'))
+
+
+def popular_products(request):
+    """Выводит топ 3 наиболее покупаемых товаров модели расходный материал"""
+    consumables = Consumable.objects.order_by('-purchases_count')[:3]
+    return consumables
+
+
+# Страницы без CRUD #####################################
 class HomeTemplateView(TemplateView):
     template_name = 'catalog/home.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Главная', 'popular_products': popular_products(self.request)})
+        return context
 
 
 class ContactsTemplateView(TemplateView):
     template_name = 'catalog/contacts.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Контакты'})
+        return context
+
+
+# система CRUD для модели Расходный материал ########################################
+class ConsumableCreateView(CreateView):
+    model = Consumable
+    form_class = ConsumableForm
+    success_url = reverse_lazy('catalog:consumables')
+
 
 class ConsumablesListView(ListView):
     model = Consumable
 
-    # if request.method == "POST":
-    #     check_box_list = request.POST.getlist('consumables_check')
-    #     search_field = request.POST.get('search_field')
-    #     consumable_list = (consumable_list.filter(
-    #         name__icontains=search_field,
-    #         category__in=check_box_list))
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        active_versions = Version.objects.filter(is_current_version=True)
+        active_consumables_pk = []
+        for version in active_versions:
+            active_consumables_pk.append(version.consumable_product.pk)
+        context['object_list'] = Consumable.objects.filter(pk__in=active_consumables_pk)
+        context.update({'title': 'Расходники'})
+        return context
 
 
 class ConsumableDetailView(DetailView):
     model = Consumable
 
-
-class ConsumableCreateView(CreateView):
-    model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
-    success_url = reverse_lazy('catalog:consumables')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Подробности товара'})
+        return context
 
 
 class ConsumableUpdateView(UpdateView):
     model = Consumable
-    fields = ('name', 'description', 'image', 'category', 'price', 'created_at', 'updated_at')
+    form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        ConsumableFormset = inlineformset_factory(Consumable, Version, form=ConsumableForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = ConsumableFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = ConsumableFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
 
 
 class ConsumableDeleteView(DeleteView):
@@ -46,64 +99,20 @@ class ConsumableDeleteView(DeleteView):
     success_url = reverse_lazy('catalog:consumables')
 
 
+# система CRUD для модели Техника ########################################
 class EquipmentListView(ListView):
     model = Equipment
 
-    # if request.method == "POST":
-    #     check_box_list = request.POST.getlist('equipment_check')
-    #     search_field = request.POST.get('search_field')
-    #     equipment_list = (equipment_list.filter(
-    #         name__icontains=search_field,
-    #         category__in=check_box_list))
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Техника'})
+        return context
 
 
 class EquipmentDetailView(DetailView):
     model = Equipment
 
-
-class BlogListView(ListView):
-    model = Blog
-
-    def get_queryset(self, *args, **kwargs):
-        """Фильтр для вывода на страницу только опубликованных блогов"""
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
-        return queryset
-
-
-class BlogDetailView(DetailView):
-    model = Blog
-
-    def get_object(self, queryset=None):
-        """Добавление просмотра после обновления страницы"""
-        self.object = super().get_object(queryset)
-        self.object.views_count += 1
-        self.object.save()
-        return self.object
-
-
-class BlogCreateView(CreateView):
-    model = Blog
-    fields = ('title', 'body', 'preview', 'created_at')
-    success_url = reverse_lazy('catalog:blogs')
-
-    def form_valid(self, form):
-        """Создаёт человеко понятный URL"""
-        if form.is_valid():
-            new_blog = form.save()
-            new_blog.slug = slugify(new_blog.title)
-        return super().form_valid(form)
-
-
-class BlogUpdateView(UpdateView):
-    model = Blog
-    fields = ('title', 'body', 'preview', 'created_at', 'is_published')
-    success_url = reverse_lazy('catalog:blogs')
-
-    def get_success_url(self):
-        return reverse('catalog:blog_detail', args=[self.kwargs.get('pk')])
-
-
-class BlogDeleteView(DeleteView):
-    model = Blog
-    success_url = reverse_lazy('catalog:blogs')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': 'Подробности товара'})
+        return context
