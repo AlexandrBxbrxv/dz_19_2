@@ -2,9 +2,11 @@
 {% block content %}
 
 {% load catalog_tags %}
+{% if user.is_authenticated %}
 <div class="container">
   <a class="btn btn-secondary" href="{% url 'catalog:consumable_create' %}">Добавить расходный материал</a>
 </div>
+{% endif %}
 <div class="container mt-1">
   <form method="post">
     {% csrf_token %}
