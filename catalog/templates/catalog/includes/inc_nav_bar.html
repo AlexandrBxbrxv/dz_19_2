@@ -42,6 +42,9 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-dark">
               {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <li><a class="dropdown-item" href="admin/">Админка</a></li>
+                {% endif %}
                 <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
                 <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
               {% else %}
