@@ -19,7 +19,7 @@ class StyleFormMixin:
 class ConsumableForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Consumable
-        exclude = ('created_at', 'updated_at', 'purchases_count',)
+        exclude = ('created_at', 'updated_at', 'purchases_count', 'creator')
 
     def clean_name(self):
         clean_name = self.cleaned_data['name']
