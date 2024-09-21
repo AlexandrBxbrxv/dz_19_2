@@ -59,23 +59,43 @@
   <div class="row">
     {% for item in object_list %}
     <div class="col-3">
-      <div class="card shadow-sm" style="width: 20rem;">
-        <div class="container center">
+      <div class="card mt-3">
+
+        <div class="card-header">
+          <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
           <img src="{{ item.image | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
         </div>
-        <div class="card-body">
-          <h5 class="card-title">{{ item.name|slice:":25" }}</h5>
-          <p class="card-text">Цена: {{ item.price }}<br>На складе: None <br>Описание: {{ item.description|slice:":100" }}</p>
-          <div class="row">
-            <a class="btn btn-secondary col-5 m-1" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
-            <a class="btn btn-success col-5 m-1" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
-          </div>
-          <div class="row">
-            <a class="btn btn-warning col-5 m-1" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
-            <a class="btn btn-danger col-5 m-1" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
-          </div>
 
+        <div class="card-body" style="height: 12rem;">
+          <p class="card-text">Цена: {{ item.price }}<br>
+            На складе: None<br>
+            {% for version in item.consumable_versions.all %}
+              {% if version.is_current_version %}
+                Версия: {{ version }}<br>
+              {% endif %}
+            {% endfor %}
+            Описание: {{ item.description|slice:":100" }}</p>
         </div>
+
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-6">
+              <a class="btn btn-secondary col-12" href="{% url 'catalog:consumable_detail' item.pk %}">Подробнее</a>
+            </div>
+            <div class="col-6">
+              <a class="btn btn-success col-12" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col-6">
+              <a class="btn btn-warning col-12" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
+            </div>
+            <div class="col-6">
+              <a class="btn btn-danger col-12" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     {% endfor %}

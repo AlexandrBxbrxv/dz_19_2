@@ -58,8 +58,8 @@ class Equipment(models.Model):
 
 
 class Version(models.Model):
-    consumable_product = models.ForeignKey(Consumable, on_delete=models.SET_NULL, verbose_name='продукт расходник',
-                                           **NULLABLE)
+    consumable_product = models.ForeignKey(Consumable, related_name='consumable_versions', on_delete=models.SET_NULL,
+                                           verbose_name='версии продукта расходника', **NULLABLE)
     number = models.PositiveIntegerField(default=1, verbose_name='номер версии')
     name = models.CharField(max_length=150, verbose_name='название версии')
     is_current_version = models.BooleanField(default=True, verbose_name='активность версии')
