@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -42,10 +43,17 @@ class ContactsTemplateView(TemplateView):
 
 
 # система CRUD для модели Расходный материал ########################################
-class ConsumableCreateView(CreateView):
+class ConsumableCreateView(CreateView, LoginRequiredMixin):
     model = Consumable
     form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
+
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.creator = user
+        product.save()
+        return super().form_valid(form)
 
 
 class ConsumablesListView(ListView):
