@@ -1,0 +1,51 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+{% load catalog_tags %}
+<div class="container mt-5">
+  <div class="row">
+    <form class="row" method="post" enctype="multipart/form-data">
+      <div class="container col-6">
+        <div class="card">
+
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">
+                <h5>{{object.first_name}} {{object.last_name}}</h5>
+                {% if object.avatar %}
+                <img src="{{ object.avatar | media_filter }}" class="card-img" style="width: 15rem; height: 15rem;">
+                {% endif %}
+              </div>
+              <div class="col-6">
+                <h6>Данные</h6>
+                <p>Email: {{object.email}}<br>
+                  {% if object.phone %}
+                  Номер телефона: {{object.phone}}
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            {% csrf_token %}
+            {{ form.as_p }}
+          </div>
+
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-6">
+                <button class="btn btn-success col-12" type="submit">Обновить</button>
+              </div>
+              <div class="col-6">
+                <a class="btn btn-secondary col-12" href="{% url 'catalog:home' %}">Назад</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
