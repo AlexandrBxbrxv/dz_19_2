@@ -113,12 +113,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = "AlexanderBxbrxv@yandex.ru"
-EMAIL_HOST_PASSWORD = get_password('email_password.txt')
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.mailersend.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "MS_JFMSs9@trial-pr9084z2er84w63d.mlsender.net"
+EMAIL_HOST_PASSWORD = 'wio72ku0EEh2sbIK'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
