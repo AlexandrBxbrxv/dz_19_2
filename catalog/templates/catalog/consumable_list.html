@@ -94,6 +94,7 @@
               <a class="btn btn-success col-12" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
             </div>
           </div>
+          {% if user.is_authenticated %}
           <div class="row mt-1">
             <div class="col-6">
               <a class="btn btn-warning col-12" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
@@ -102,6 +103,7 @@
               <a class="btn btn-danger col-12" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
             </div>
           </div>
+          {% endif %}
         </div>
 
       </div>
