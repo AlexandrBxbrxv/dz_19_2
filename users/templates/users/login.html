@@ -10,10 +10,13 @@
           <div class="card-header">
             <h4>Авторизация</h4>
           </div>
+
           <div class="card-body">
             {% csrf_token %}
             {{ form.as_p }}
+            <a href="{% url 'users:password_reset' %}">Восстановить пароль</a>
           </div>
+
           <div class="card-footer">
             <div class="row">
               <div class="col-6">
@@ -24,6 +27,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
