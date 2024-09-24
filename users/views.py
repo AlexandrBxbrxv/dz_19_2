@@ -1,5 +1,8 @@
 import secrets
+import string
 
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import PasswordResetDoneView, PasswordResetView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -40,6 +43,30 @@ def email_verification(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse('users:login'))
+
+
+class UserPasswordResetView(PasswordResetView):
+    template_name = 'users/reset_password.html'
+    email_template_name = 'users/password_reset_email.html'
+    success_url = reverse_lazy('users:password_reset_done')
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        user = get_object_or_404(User, email=email)
+        alphabet = string.ascii_letters + string.digits
+        new_password = ''.join(secrets.choice(alphabet) for i in range(8))
+        user.password = make_password(new_password)
+        message = (f'Здравствуйте! Вас приветствует сервис восстановления сайта ОфисныйГном.\n'
+                   f'Ваш новый пароль:\n'
+                   f'{new_password}')
+        send_mail(
+            subject='Восстановление пароля на сайте ОфисныйГном',
+            message=message,
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[user.email],
+        )
+        user.save()
+        return super().form_valid(form)
 
 
 class ProfileView(UpdateView):
