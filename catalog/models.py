@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -25,6 +27,9 @@ class Consumable(models.Model):
     purchases_count = models.IntegerField(default=0, verbose_name='единиц куплено')
     created_at = models.DateField(**NULLABLE, verbose_name='дата создания')
     updated_at = models.DateField(**NULLABLE, verbose_name='дата последнего изменения')
+
+    creator = models.ForeignKey(User, related_name='creator', on_delete=models.SET_NULL,
+                                **NULLABLE, verbose_name='создатель')
 
     def __str__(self):
         return f'{self.name}'

@@ -2,9 +2,11 @@
 {% block content %}
 
 {% load catalog_tags %}
+{% if user.is_authenticated %}
 <div class="container">
   <a class="btn btn-secondary" href="{% url 'catalog:consumable_create' %}">Добавить расходный материал</a>
 </div>
+{% endif %}
 <div class="container mt-1">
   <form method="post">
     {% csrf_token %}
@@ -48,8 +50,14 @@
       </div>
 
       <div class="container col-4">
-        <input type="text" name="search_field" placeholder="Название">
-        <button type="submit">Найти</button>
+        <div class="row">
+          <div class="col-8">
+            <input class="form-control col-12" type="text" name="search_field" placeholder="Название">
+          </div>
+          <div class="col-4">
+            <a class="btn btn-secondary col-12" href="#" type="submit">Найти</a>
+          </div>
+        </div>
       </div>
     </div>
   </form>
@@ -86,6 +94,7 @@
               <a class="btn btn-success col-12" href="{% url 'catalog:consumable_purchase' item.pk %}">Купить</a>
             </div>
           </div>
+          {% if user.is_authenticated %}
           <div class="row mt-1">
             <div class="col-6">
               <a class="btn btn-warning col-12" href="{% url 'catalog:consumable_update' item.pk %}">Изменить</a>
@@ -94,6 +103,7 @@
               <a class="btn btn-danger col-12" href="{% url 'catalog:consumable_delete' item.pk %}">Удалить</a>
             </div>
           </div>
+          {% endif %}
         </div>
 
       </div>
