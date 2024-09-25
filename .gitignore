@@ -160,6 +160,4 @@ cython_debug/
 .idea/
 poetry.lock
 /Задачи.txt
-/password.txt
-/admin_password.txt
-/email_password.txt
+/project_config.json
