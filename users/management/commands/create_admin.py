@@ -2,7 +2,7 @@ from django.core.management import BaseCommand
 
 from users.models import User
 
-from func_get_password import get_password
+from func_get_password import get_conf
 
 
 class Command(BaseCommand):
@@ -15,5 +15,5 @@ class Command(BaseCommand):
             is_superuser=True
         )
 
-        user.set_password(get_password('admin_password.txt'))
+        user.set_password(get_conf('ADMIN_PASSWORD'))
         user.save()
