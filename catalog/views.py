@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ConsumableForm
+from catalog.forms import ConsumableForm, ConsumableModeratorForm
 from catalog.models import Consumable, Equipment, Version
 
 
@@ -43,7 +44,7 @@ class ContactsTemplateView(TemplateView):
 
 
 # система CRUD для модели Расходный материал ########################################
-class ConsumableCreateView(CreateView, LoginRequiredMixin):
+class ConsumableCreateView(CreateView):
     model = Consumable
     form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
@@ -74,10 +75,17 @@ class ConsumableDetailView(DetailView):
         return context
 
 
-class ConsumableUpdateView(UpdateView):
+class ConsumableUpdateView(LoginRequiredMixin, UpdateView):
     model = Consumable
     form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.creator:
+            self.object.save()
+            return self.object
+        raise PermissionDenied
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -95,6 +103,15 @@ class ConsumableUpdateView(UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.creator:
+            return ConsumableForm
+        if user.has_perms(['catalog.set_published', 'catalog.change_description', 'catalog.change_category']):
+            return ConsumableModeratorForm
+        else:
+            raise PermissionDenied
 
 
 class ConsumableDeleteView(DeleteView):
