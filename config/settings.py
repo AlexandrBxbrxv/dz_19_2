@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-from func_get_password import get_password
+from func_get_password import get_conf
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,7 +70,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'catalog',
         'USER': 'postgres',
-        'PASSWORD': get_password('password.txt'),
+        'PASSWORD': get_conf('DATABASE_PASSWORD'),
     }
 }
 
@@ -116,7 +116,7 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.mailersend.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "MS_JFMSs9@trial-pr9084z2er84w63d.mlsender.net"
-EMAIL_HOST_PASSWORD = 'wio72ku0EEh2sbIK'
+EMAIL_HOST_PASSWORD = get_conf('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
