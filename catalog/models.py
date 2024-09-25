@@ -1,3 +1,5 @@
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from users.models import User
@@ -30,11 +32,18 @@ class Consumable(models.Model):
 
     creator = models.ForeignKey(User, related_name='creator', on_delete=models.SET_NULL,
                                 **NULLABLE, verbose_name='создатель')
+    is_published = models.BooleanField(default=False, verbose_name='признак публикации')
 
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
+        permissions = [
+            ('set_published', 'Can set publication status of product'),
+            ('change_description', 'Can change description of product'),
+            ('change_category', 'Can change category of product')
+        ]
+
         verbose_name = 'расходный материал'
         verbose_name_plural = 'расходные материалы'
         ordering = ('price', 'purchases_count',)
