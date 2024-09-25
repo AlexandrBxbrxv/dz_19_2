@@ -80,6 +80,13 @@ class ConsumableUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ConsumableForm
     success_url = reverse_lazy('catalog:consumables')
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.creator:
+            self.object.save()
+            return self.object
+        raise PermissionDenied
+
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         ConsumableFormset = inlineformset_factory(Consumable, Version, form=ConsumableForm, extra=1)
