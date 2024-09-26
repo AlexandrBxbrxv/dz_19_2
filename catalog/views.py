@@ -15,7 +15,7 @@ def consumable_purchase_count(request, pk):
     product.purchases_count += 1
     product.save()
 
-    return redirect(reverse(f'catalog:consumables'))
+    return redirect(reverse('catalog:consumables'))
 
 
 def popular_products(request):

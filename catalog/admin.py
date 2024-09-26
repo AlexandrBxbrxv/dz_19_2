@@ -27,4 +27,3 @@ class VersionAdmin(admin.ModelAdmin):
     list_display = ('id', 'consumable_product', 'number', 'name', 'is_current_version')
     list_filter = ('is_current_version',)
     search_fields = ('name',)
-
