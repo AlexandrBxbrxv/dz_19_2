@@ -1,8 +1,13 @@
+import os
+
 from django.core.management import BaseCommand
-
 from users.models import User
+from pathlib import Path
+from dotenv import load_dotenv
 
-from func_get_password import get_password
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 
 class Command(BaseCommand):
@@ -15,5 +20,5 @@ class Command(BaseCommand):
             is_superuser=True
         )
 
-        user.set_password(get_password('admin_password.txt'))
+        user.set_password(os.getenv('ADMIN_PASSWORD'))
         user.save()

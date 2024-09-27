@@ -7,6 +7,7 @@ from django.views.generic import ListView, TemplateView, DetailView, CreateView,
 
 from catalog.forms import ConsumableForm, ConsumableModeratorForm
 from catalog.models import Consumable, Equipment, Version
+from catalog.services import get_consumables_from_cache
 
 
 def consumable_purchase_count(request, pk):
@@ -15,7 +16,7 @@ def consumable_purchase_count(request, pk):
     product.purchases_count += 1
     product.save()
 
-    return redirect(reverse(f'catalog:consumables'))
+    return redirect(reverse('catalog:consumables'))
 
 
 def popular_products(request):
@@ -62,7 +63,7 @@ class ConsumablesListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'title': 'Расходники'})
+        context.update({'title': 'Расходники', 'object_list': get_consumables_from_cache()})
         return context
 
 

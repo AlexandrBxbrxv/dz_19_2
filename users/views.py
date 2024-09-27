@@ -2,7 +2,7 @@ import secrets
 import string
 
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.views import PasswordResetDoneView, PasswordResetView
+from django.contrib.auth.views import PasswordResetView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
