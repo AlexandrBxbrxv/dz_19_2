@@ -9,16 +9,19 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-from func_get_password import get_conf
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-p@zp-ttp=@tt%9rs_1-xw09=6+wqt#wq9=@5c+y1z74%^2_i31'
+load_dotenv(BASE_DIR / '.env')
 
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = os.getenv('DEBUG') == 'True'
+
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 
 INSTALLED_APPS = [
@@ -70,7 +73,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'catalog',
         'USER': 'postgres',
-        'PASSWORD': get_conf('DATABASE_PASSWORD'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
     }
 }
 
@@ -116,9 +119,20 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.mailersend.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "MS_JFMSs9@trial-pr9084z2er84w63d.mlsender.net"
-EMAIL_HOST_PASSWORD = get_conf('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHES_LOCATION'),
+        }
+    }
